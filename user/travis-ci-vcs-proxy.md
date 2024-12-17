@@ -37,16 +37,16 @@ You will need:
 
 If you are on Windows when working with Perforce repository, you may want to check [Windows section](/user/travis-ci-vcs-proxy#windows) below in the *P4 CLI Usage* chapter.
 
-## Setting up repositories and organization TCI Proxy
+## Setup repositories and organization TCI Proxy
 
-You will go through following major steps in configuration
+You will go through the following major steps in configuration.
 
 * In case of Assembla Cloud with P4 or SVN repository
   * Note down certain configuration details from your P4 or SVN repository in Assembla Cloud. 
   * Add Travis Ci VCS Proxy listener token to the Assembla Cloud P4 or SVN repository settings.
   * For Assembla Cloud P4 repository: optionally configure a group with long login timeout (to prevent builds not running due to expired P4 tickets/tokens). 
 
-> Please note, that Assembla Git repositories are not avialable in Travis CI VCS Proxy. These are available after you [directly sign-up to Travis CI using Assembla](/user/tutorial/#to-get-started-with-travis-ci-using-assembla). Travis CI VCS Proxy is a separate connection layer for P4 and SVN servers, as it is meant to connect also self-hosted P4 or SVN servers.
+> Please note, that Assembla Git repositories are not avialable in Travis CI VCS Proxy. These are available after you [directly sign-up to Travis CI using Assembla](/user/onboarding/). Travis CI VCS Proxy is a separate connection layer for P4 and SVN servers, as it is meant to connect also self-hosted P4 or SVN servers.
  
 * Travis CI VCS Proxy
   * Add an organization.
@@ -81,7 +81,7 @@ The next step is to add a repository to your Organization. Use the `Add Reposito
     1. First, navigate to your selected SVN Repository, and select the `Source` option.
     2. On the right-hand menu, use the `Checkout` option, **select 'SSH'** and note down both the `REPO_NAME` and the `svn+ssh://` link. You will need these in TCI VS Proxy.
     3. Navigate to your SVN Repository `Settings` option, and select the `Deploy SSH keys` option - add here the **public** key you intend to use with TCI VCS Proxy and Travis CI (or copy an already added one if you wish to). Please refer to [Assembla - using SVN+SSH protocol](https://articles.assembla.com/en/articles/1137042-using-svn-ssh-protocol) for more details.
-        - **Please note**: for the integration with Travis CI VCS Proxy you will need a key with no passphrase generated, e.g. via `ssh-keygen -t rsa -f test_key_with_no_passphrase -N ""` due to Travis CI VCS Proxy conciously not wanting to store your SSH key passwords for automated connection
+        - **Please note**: for the integration with Travis CI VCS Proxy you will need a key in PEM format with no passphrase generated, e.g. via `ssh-keygen -t rsa -f test_key_with_no_passphrase -N "" -m PEM` due to Travis CI VCS Proxy conciously not wanting to store your SSH key passwords for automated connection
         - **Please note**: When pasting a public SSH Key in Assembla Repository settings, make sure it has 'write access' checked in order to make the integration with TCI VCS Proxy work. This is current Assembla requirement for authorizing the connection. Neither Travis CI VCS Proxy nor Travis CI requires write access to your repositories - only read access is needed to set up Travis CI VCS Proxy and trigger builds in Travis CI.
     4. Next, navigate to your SVN Repository `Settings` option, and select `Travis VCS Proxy integration` - enter the same listener token previously defined in your TCI VCS Proxy Organization.
 2. In **TCI VCS Proxy** (from the `Add Repository` view, `Checkout` -> `SSH` ):
@@ -134,7 +134,7 @@ P4CLIENT=testspace_j # This is your local client name, choose anything.
 ```
 You can access your P4 environment variables by running in your command line `cat ~/.p4enviro` and if you want to edit your environment variables run `vim ~/.p4enviro` in your command line or use an IDE or text editor of your choice.
 
-## Inviting collaborators to TCI VCS Proxy Organization
+## Invite collaborators to TCI VCS Proxy Organization
 
 To allow users to trigger builds in Travis CI, first, you must add them as members of the organization in the TCI VCS Proxy. 
 
@@ -183,7 +183,7 @@ Upon synchronizing of TCI VCS Proxy organization with Travis CI, a `member` beco
 | SVN             | first user adding repository to TCI VCS Proxy organization | all subsequent users adding repository (write-access can commit and trigger a build) | N/A |
 
 
-The builds in Travis CI are executed based on the personal access credentials for each account configured in TCI VCS Proxy. Thus, only commits performed by the TCI VCS Proxy users with correct P4/SVn credentials may trigger automatic builds in the Travis CI.
+The builds in Travis CI are executed based on the personal access credentials for each account configured in TCI VCS Proxy. Thus, as of now, **only commits performed by the TCI VCS Proxy users with correct P4/SVN credentials may trigger automatic builds in the Travis CI**.
 
 ## TCI VCS Proxy listener tokens
 
@@ -276,7 +276,7 @@ After you pushed successfully, with your Assembla username, you can see my `.tra
 
 You may find more of the useful information in <a href="https://articles.assembla.com/en/collections/33902-using-perforce" target="_blank">Assembla articles on working with Perforce Helix Core<a/>. 
 
-## I want to build with Travis CI
+## Build with Travis CI
 
 Once the Travis CI VCS Proxy configuration is ready for at least one organization and repository, please follow the instructions in [Getting started with Travis CI using Travis CI VCS Proxy](/user/travis-ci-vcs-proxy-get-started/).
 
